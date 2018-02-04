@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="533.0" prefWidth="643.0" style="-fx-background-color: #fff; -fx-border-color: #fff; -fx-border-width: 2px;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Login">
+   <children>
+      <JFXCheckBox fx:id="idCheckBox" layoutX="186.0" layoutY="357.0" text="Não sou um robô" unCheckedColor="BLACK" />
+      <JFXButton layoutX="245.0" layoutY="412.0" onAction="#logar" prefHeight="43.0" prefWidth="171.0" style="-fx-background-color: #5270ff;" text="Logar">
+         <effect>
+            <InnerShadow height="23.97" radius="10.7425" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Label layoutX="254.0" layoutY="502.0" text="ZTO Solutions - Zero To One" />
+      <JFXTextField fx:id="txtEmail" layoutX="191.0" layoutY="175.0" prefHeight="43.0" prefWidth="279.0" promptText="E- mail" unFocusColor="#5270ff">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" radius="0.0" width="0.0" />
+         </effect>
+      </JFXTextField>
+      <JFXTextField fx:id="txtSenha" layoutX="191.0" layoutY="267.0" prefHeight="43.0" prefWidth="279.0" promptText="Senha" style="-fx-text-background-color: #fff;" unFocusColor="#5270ff">
+         <effect>
+            <DropShadow height="0.0" radius="0.0" width="0.0" />
+         </effect>
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXTextField>
+
+      	<ProgressBar fx:id="idProgressBar" layoutX="74.0" layoutY="394.0" prefHeight="18.0" prefWidth="498.0" progress="0.0" visible="false" />
+      <StackPane fx:id="stackPane" layoutX="162.0" layoutY="138.0" prefHeight="74.0" prefWidth="319.0" snapToPixel="false" visible="false" />
+      <ImageView fitHeight="101.0" fitWidth="138.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@./img/tdnovo.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="237.0" layoutY="103.0" text="Sistema  Financeiro">
+         <font>
+            <Font name="System Italic" size="22.0" />
+         </font>
+      </Label>
+
+   </children>
+</AnchorPane>

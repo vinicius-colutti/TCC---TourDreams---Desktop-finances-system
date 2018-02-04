@@ -1,0 +1,274 @@
+package application;
+
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream.GetField;
+import java.net.URL;
+import java.sql.Date;
+import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
+
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import modelo.Hotel;
+
+
+
+import modelo.ConectarBanco;
+
+public class FormularioHoteleirosController implements Initializable{
+
+	@FXML private TableColumn<Hotel,String> clmnNomeHotel;
+	@FXML private TableColumn<Hotel,String> clmnEmailHotel;
+	@FXML private TableColumn<Hotel,String> clmnCnpj;
+	@FXML private TableColumn<Hotel,Number> clmnValorPagar;
+
+
+
+	@FXML private TextField txtCodigo;
+	@FXML private TextField txtHotel;
+	@FXML private TextField txtEmail;
+	@FXML private TextField txtCnpj;
+	@FXML private TextField txtValorPagar;
+
+	@FXML private Button btnGuardar;
+	@FXML private Button btnEliminar;
+	@FXML private Button btnActualizar;
+	@FXML private Button btnGerarBoleto;
+	@FXML private Button btnReserva;
+
+	@FXML StackPane stackPane;
+
+
+	@FXML private TableView<Hotel> tblViewHotel;
+
+
+
+	private ObservableList<Hotel> lista;
+
+	private ConectarBanco conexion;
+
+
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+
+		try{
+
+
+		conexion = new ConectarBanco();
+		conexion.establecerConec();
+
+		clmnValorPagar.setCellValueFactory(new PropertyValueFactory<Hotel,Number>("valor_pagar"));
+		clmnNomeHotel.setCellValueFactory(new PropertyValueFactory<Hotel,String>("nome_hotel"));
+		clmnEmailHotel.setCellValueFactory(new PropertyValueFactory<Hotel,String>("email"));
+		clmnCnpj.setCellValueFactory(new PropertyValueFactory<Hotel,String>("cnpj_hotel"));
+
+		//tblViewHotel.getColumns().addAll(clmnValorPagar, clmnNomeHotel, clmnEmailHotel, clmnCnpj);
+
+		selectPorId();
+		lista = FXCollections.observableArrayList();
+
+
+
+		Hotel.listarHoteis(conexion.getConnection(), lista);
+
+
+
+		tblViewHotel.setItems(lista);
+
+
+		conexion.fechaConec();
+		}catch(Exception e){
+
+			System.out.println(e);;
+		}
+
+
+
+
+
+	}
+
+	public void abrirReservas(){
+
+		Main.abrirTela("listarreservas");
+	}
+
+
+
+	public void selectPorId(){
+		tblViewHotel.getSelectionModel().selectedItemProperty().addListener(
+				new ChangeListener<Hotel>() {
+					@Override
+					public void changed(ObservableValue<? extends Hotel> arg0,
+							Hotel valorAnterior, Hotel valorSeleccionado) {
+							if (valorSeleccionado!=null){
+								txtCodigo.setText(String.valueOf(valorSeleccionado.getIdHotel()));
+								txtHotel.setText(valorSeleccionado.getNome_hotel());
+								txtEmail.setText(valorSeleccionado.getEmail());
+								txtValorPagar.setText(String.valueOf(valorSeleccionado.getValor_pagar()));
+								txtCnpj.setText(valorSeleccionado.getCnpj_hotel());
+
+
+
+
+								btnEliminar.setDisable(false);
+								btnGerarBoleto.setDisable(false);
+							}
+					}
+
+				}
+		);
+	}
+	@FXML public void gerarPdf(){
+
+		try {
+
+			Pdf.nome_hotel = txtHotel.getText();
+			Pdf.valor_pagar = txtValorPagar.getText();
+			Pdf.pdf();
+
+
+		} catch (IOException e) {
+
+
+					JOptionPane.showMessageDialog(null, "O erro é:\n\n" + e.toString(),
+							"O erro é:\n\n" + e.toString(), JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			JOptionPane.showMessageDialog(null, "O erro é:\n\n" + e.toString(),
+					"O erro é:\n\n" + e.toString(), JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+
+
+	}
+
+
+	public void logout(){
+		Main.abrirTela("login");
+	}
+
+	//@FXML public void gerarPdf(){
+
+		//Document document = new Document();
+
+       // try {
+           // PdfWriter.getInstance(document, new FileOutputStream("documento.pdf"));
+
+           // document.open();
+           // document.add(new Paragraph("--------------------------------------------------------------------"));
+           // document.add(new Paragraph("PDF GERADO COM SUCESSO"));
+           // document.add(new Paragraph("--------------------------------------------------------------------"));
+           // document.add(new Paragraph(txtHotel.getText()));
+           // document.add(new Paragraph(txtEmail.getText()));
+           // document.add(new Paragraph(txtCnpj.getText()));
+
+
+
+       // } catch (DocumentException ex) {
+            //System.out.println("Error:"+ex);
+       // } catch (FileNotFoundException ex) {
+           // System.out.println("Error:"+ex);
+       // }finally{
+            //document.close();
+       // }
+
+       // try {
+           // Desktop.getDesktop().open(new File("documento.pdf"));
+       // } catch (IOException ex) {
+           // System.out.println("Error:"+ex);
+       // }
+
+
+
+	//}
+
+
+
+	@FXML
+	public void aprovarRegistro(){
+		conexion.establecerConec();
+		int resultado = tblViewHotel.getSelectionModel().getSelectedItem().aprovarRegistro(conexion.getConnection());
+		conexion.fechaConec();
+
+		if (resultado == 1){
+			lista.remove(tblViewHotel.getSelectionModel().getSelectedIndex());
+			JFXDialogLayout content = new JFXDialogLayout();
+
+			stackPane.setVisible(true);
+			JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+
+
+			content.setHeading(new Text("Alerta"));
+
+			content.setBody(new Text("Registro aprovado em nossa base de dados!."));
+
+			JFXButton button = new JFXButton("Okay");
+
+			button.setOnAction(new javafx.event.EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+
+
+					dialog.close();
+					stackPane.setVisible(false);
+				}
+			});
+			content.setActions(button);
+
+
+			dialog.show();
+		}
+	}
+
+	@FXML
+	public void limpiarComponentes(){
+		txtCodigo.setText(null);
+		txtHotel.setText(null);
+		txtValorPagar.setText(null);
+		txtEmail.setText(null);
+		txtCnpj.setText(null);
+
+
+		btnGuardar.setDisable(false);
+		btnEliminar.setDisable(true);
+		btnActualizar.setDisable(true);
+	}
+}

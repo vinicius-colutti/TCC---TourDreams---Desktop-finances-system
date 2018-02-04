@@ -1,0 +1,167 @@
+package modelo;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
+
+public class Hotel{
+	private IntegerProperty id_hotel;
+	private String nome_hotel;
+	private String cnpj_hotel;
+	private String email_hotel;
+	private int valor_pagar;
+
+
+	public Hotel(Integer id_hotel, String nome_hotel, String cnpj_hotel, Integer valor_pagar, String email_hotel){
+		this.id_hotel = new SimpleIntegerProperty(id_hotel);
+		this.setNome_hotel(nome_hotel);
+		this.setEmailHotel(email_hotel);
+		this.setValor_pagar(valor_pagar);
+		this.setCnpj_hotel(cnpj_hotel);
+
+
+
+	}
+	private String getCnpj_hotel() {
+		return cnpj_hotel;
+	}
+
+	private void setCnpj_hotel(String cnpj_hotel) {
+		this.cnpj_hotel = cnpj_hotel;
+	}
+
+	public String getNome_hotel() {
+		return nome_hotel;
+	}
+
+
+	public void setNome_hotel(String nome_hotel) {
+		this.nome_hotel = nome_hotel;
+	}
+
+
+	public Integer getIdHotel(){
+		return id_hotel.get();
+	}
+
+	public void setIdHotel(Integer id_hotel){
+		this.id_hotel = new SimpleIntegerProperty(id_hotel);
+	}
+
+
+
+	public String getEmailHotel(){
+		return email_hotel;
+	}
+
+	public void setEmailHotel(String email_hotel){
+		this.email_hotel = email_hotel;
+	}
+
+
+
+
+	public IntegerProperty idHotelProperty(){
+		return id_hotel;
+	}
+
+	public int getValor_pagar() {
+		return valor_pagar;
+	}
+	public void setValor_pagar(int valor_pagar) {
+		this.valor_pagar = valor_pagar;
+	}
+
+
+
+	//public int guardarRegistro(Connection connection){
+		//try {
+
+			//PreparedStatement instruccion =
+					//connection.prepareStatement("INSERT INTO tbl_alunos (nome, sobrenome, idade, genero, "
+							//+ "data, codigo_aula, codigo_professor) "+
+							//	"VALUES (?, ?, ?, ?, ?, ?, ?)");
+			//instruccion.setString(1, nome_hotel.get());
+			//instruccion.setString(2, sobrenome.get());
+			//instruccion.setInt(3, idade.get());
+			//instruccion.setString(4, genero.get());
+			//instruccion.setDate(5, data);
+			//instruccion.setInt(6, aula.getCodigoAula());
+			//instruccion.setInt(7, professor.getCodigoProfessor());
+			//return instruccion.executeUpdate();
+		//} catch (SQLException e) {
+			//e.printStackTrace();
+			//return 0;
+		//}
+	//}
+
+	public int actualizarRegistro(Connection connection){
+		try {
+			PreparedStatement instruccion =
+					connection.prepareStatement(
+								"update tbl_hotel set nome_hotel = ?, cnpj = ?, email_hotel = ?, situacao_hotel = 'alterou' where id_hotel = 1;"
+					);
+			instruccion.setString(1, nome_hotel);
+			instruccion.setString(2, getCnpj_hotel());
+			instruccion.setString(3, email_hotel);
+
+			return instruccion.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	public int eliminarRegistro(Connection connection){
+		try {
+			PreparedStatement instruccion = connection.prepareStatement(
+							"update tbl_hotel set situacao_hotel='nada' where id_hotel = ?"
+			);
+			instruccion.setInt(1, id_hotel.get());
+			return instruccion.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	public static void listarHoteis(Connection connection,
+				ObservableList<Hotel> lista){
+		try {
+			Statement instruccion = connection.createStatement();
+			ResultSet resultado = instruccion.executeQuery(
+					"select h.nome_hotel, h.email_hotel, h.cnpj, h.id_hotel, SUM(r.valor_total) as valor_total FROM tbl_reserva as r inner join tbl_quarto as q on q.id_quarto = r.id_quarto inner join tbl_hotel as h on h.id_hotel = q.id_hotel  where h.situacao_hotel = 'devendo' group by h.nome_hotel;"
+			);
+			while(resultado.next()){
+				lista.add(
+						new Hotel(
+								resultado.getInt("id_hotel"),
+								resultado.getString("nome_hotel"),
+								resultado.getString("cnpj"),
+								resultado.getInt("valor_total"),
+								resultado.getString("email_hotel"))
+
+						);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
+
+
+
+}

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1287.0" style="-fx-border-color: #5270ff; -fx-border-width: 5px;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FormularioHoteleirosController">
+   <children>
+      <SplitPane dividerPositions="0.4101522842639594" layoutX="11.0" layoutY="21.0" prefHeight="358.0" prefWidth="987.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="401.0" style="-fx-background-color: #fff;">
+               <children>
+                  <GridPane layoutX="51.0" layoutY="155.0" prefHeight="415.0" prefWidth="403.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="187.0" minWidth="10.0" prefWidth="113.0" />
+                      <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="270.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="137.0" minHeight="10.0" prefHeight="84.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="178.0" minHeight="10.0" prefHeight="117.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="174.0" minHeight="10.0" prefHeight="93.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="264.0" minHeight="10.0" prefHeight="88.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="331.0" minHeight="10.0" prefHeight="83.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="166.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="83.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="47.0" minHeight="0.0" prefHeight="11.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Id:">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label text="Hotel:" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label text="E- mail:" GridPane.rowIndex="2">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label text="CNPJ:" GridPane.rowIndex="3">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="txtCodigo" disable="true" prefHeight="25.0" prefWidth="234.0" unFocusColor="#5270ff" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font></JFXTextField>
+                        <JFXTextField fx:id="txtHotel" disable="true" prefHeight="25.0" prefWidth="234.0" unFocusColor="#5270ff" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font></JFXTextField>
+                        <JFXTextField fx:id="txtEmail" disable="true" prefHeight="25.0" prefWidth="235.0" unFocusColor="#5270ff" GridPane.columnIndex="1" GridPane.rowIndex="2">
+							<font>
+                              <Font name="System Bold" size="20.0" />
+                           </font></JFXTextField>
+                        <JFXTextField fx:id="txtCnpj" disable="true" prefHeight="25.0" prefWidth="234.0" unFocusColor="#5270ff" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font></JFXTextField>
+                        <AmbientLight color="CHARTREUSE" lightOn="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <JFXTextField fx:id="txtValorPagar" disable="true" prefHeight="25.0" prefWidth="238.0" unFocusColor="#5270ff" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <font>
+                              <Font name="System Bold" size="25.0" />
+                           </font></JFXTextField>
+                        <Label text="Valor:" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="20.0" />
+                           </font></Label>
+                     </children>
+                  </GridPane>
+                  <JFXButton fx:id="btnGerarBoleto" disable="true" layoutX="298.0" layoutY="644.0" onAction="#gerarPdf" prefHeight="31.0" prefWidth="156.0" style="-fx-background-color: #5270ff;" text="Gerar Boleto" />
+                  <JFXButton fx:id="btnEliminar" disable="true" layoutX="94.0" layoutY="644.0" onAction="#aprovarRegistro" prefHeight="31.0" prefWidth="156.0" style="-fx-background-color: #5270ff;" text="Aprovar">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXButton>
+                  <ImageView fitHeight="212.0" fitWidth="238.0" layoutX="175.0" layoutY="-40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@./img/Sistema.png" />
+                     </image>
+                  </ImageView>
+                  <StackPane fx:id="stackPane" layoutX="69.0" layoutY="137.0" prefHeight="437.0" prefWidth="425.0" />
+                  <ImageView fx:id="imgReservas" fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#abrirReservas" pickOnBounds="true" preserveRatio="true">
+				  <image>
+                        <Image url="@./estatisticas.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="464.0" layoutY="14.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                        <Image url="@./logout.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TableView fx:id="tblViewHotel" layoutY="-4.0" prefHeight="700.0" prefWidth="755.0">
+                    <columns>
+                      <TableColumn fx:id="clmnNomeHotel" prefWidth="200.0" text="Hotel" />
+                      <TableColumn fx:id="clmnCnpj" prefWidth="182.0" text="CNPJ" />
+                        <TableColumn fx:id="clmnEmailHotel" prefWidth="224.0" text="E- mail" />
+                        <TableColumn fx:id="clmnValorPagar" prefWidth="148.0" text="valor" />
+                    </columns>
+                  </TableView>
+                  <Label layoutX="242.0" layoutY="714.0" text="TourDreams | Todos os direitos reservados." textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

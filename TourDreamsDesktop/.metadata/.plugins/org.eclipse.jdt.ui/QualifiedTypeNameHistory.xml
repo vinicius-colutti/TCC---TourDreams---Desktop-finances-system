@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.itextpdf.text.pdf.BaseFont"/>
+<fullyQualifiedTypeName name="com.itextpdf.text.pdf.ColumnText"/>
+<fullyQualifiedTypeName name="com.itextpdf.text.Paragraph"/>
+<fullyQualifiedTypeName name="modelo.Reservas"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="javafx.collections.ObservableList"/>
+<fullyQualifiedTypeName name="application.QtdReservas"/>
+<fullyQualifiedTypeName name="javafx.beans.property.SimpleIntegerProperty"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+</qualifiedTypeNameHistroy>
